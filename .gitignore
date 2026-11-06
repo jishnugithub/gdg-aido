@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+aidmate/node_modules
+aidmate/functions/node_modules
+
+# Build outputs
+dist
+aidmate/dist
+aidmate/functions/lib
+
+# Environment variables
+.env
+aidmate/.env
+.env*.local
+aidmate/.env*.local
+!.env.example
+!aidmate/.env.example
+
+# OS & Logs
+.DS_Store
+*.log
+.firebase

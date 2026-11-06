@@ -1,0 +1,68 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.admin == true;
+    }
+    
+    function isImageUnder5MB() {
+      return request.resource != null &&
+        request.resource.size <= 5 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/.*');
+    }
+    
+    function isEvidenceUnder10MB() {
+      return request.resource != null &&
+        request.resource.size <= 10 * 1024 * 1024;
+    }
+    
+    function isMediaUnder15MB() {
+      return request.resource != null &&
+        request.resource.size <= 15 * 1024 * 1024 &&
+        (request.resource.contentType.matches('image/.*') ||
+         request.resource.contentType.matches('video/.*') ||
+         request.resource.contentType.matches('audio/.*'));
+    }
+
+    // User profile photos: read by authenticated, write by owner, max 5MB, image types only
+    match /userPhotos/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) && isImageUnder5MB();
+    }
+    match /users/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) && isImageUnder5MB();
+    }
+
+    // Job images: read by authenticated, write by job requester, max 5MB, image types only
+    match /jobImages/{jobId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isImageUnder5MB();
+    }
+    match /jobs/{jobId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isImageUnder5MB();
+    }
+
+    // Dispute evidence: read by admin + dispute raiser, write by dispute raiser
+    match /disputeEvidence/{disputeId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isEvidenceUnder10MB();
+    }
+
+    // Chat media: read/write by conversation participants
+    match /chatMedia/{conversationId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isMediaUnder15MB();
+    }
+  }
+}

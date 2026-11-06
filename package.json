@@ -1,0 +1,10 @@
+{
+  "name": "aidmate-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix aidmate run dev",
+    "build": "npm --prefix aidmate run build",
+    "preview": "npm --prefix aidmate run preview"
+  }
+}

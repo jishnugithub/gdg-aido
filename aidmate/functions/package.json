@@ -1,0 +1,32 @@
+{
+  "name": "aidmate-functions",
+  "version": "1.0.0",
+  "description": "Aidmate Firebase Cloud Functions Backend",
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^5.1.1",
+    "stripe": "^17.5.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.7.2"
+  },
+  "private": true
+}

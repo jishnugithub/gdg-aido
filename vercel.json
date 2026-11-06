@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm --prefix aidmate run build",
+  "outputDirectory": "aidmate/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
