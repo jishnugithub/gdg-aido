@@ -5,7 +5,7 @@ import { getDatabase, connectDatabaseEmulator, type Database } from 'firebase/da
 import { getStorage, connectStorageEmulator, type FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCGTDTwxJfb-sRTxRzIIaEow5PIVueDfDY",
+  apiKey: "AIzaSyCGTDTwxjFb-sRTxRzIIaEow5PIVueDfDY",
   authDomain: "gdg-aido.firebaseapp.com",
   projectId: "gdg-aido",
   storageBucket: "gdg-aido.firebasestorage.app",
